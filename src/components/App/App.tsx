@@ -1,90 +1,156 @@
-import { useState, useEffect } from "react";
-import { Toaster } from "react-hot-toast";
+import { useState, useEffect, useCallback } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-import SearchBar from "./components/SearchBar/SearchBar";
-import ImageGallery from "./components/ImageGallery/ImageGallery";
-import Loader from "./components/Loader/Loader";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
-import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
-import ImageModal from "./components/ImageModal/ImageModal";
+// import SearchBar from "./components/SearchBar/SearchBar";
+import SearchBar from "../SearchBar/SearchBar";
+// import ImageGallery from "./components/ImageGallery/ImageGallery";
+import ImageGallery from "../ImageGallery/ImageGallery";
+// import Loader from "./components/Loader/Loader";
+import Loader from "../Loader/Loader";
+// import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+// import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
+// import ImageModal from "./components/ImageModal/ImageModal";
+import ImageModal from "../ImageModal/ImageModal";
+import { Image } from "./App.types";
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
-import "./App.css";
+// import "./App.css";
+const ACCESS_KEY = "FzG5qD0HVMRBUhSh_8lpjbDu2i6ByAX9c3NYbWpe3rU";
 
-function App() {
-  const [images, setImages] = useState([]);
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
+const App = () => {
+  const [images, setImages] = useState<Image[]>([]);
+  const [query, setQuery] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
 
-  const perPage = 12;
-  const accessKey = "FzG5qD0HVMRBUhSh_8lpjbDu2i6ByAX9c3NYbWpe3rU";
+  // const perPage = 12;
+  // const accessKey = "FzG5qD0HVMRBUhSh_8lpjbDu2i6ByAX9c3NYbWpe3rU";
 
-  useEffect(() => {
-    if (!query) return;
+  // useEffect(() => {
+  //   if (!query) return;
 
-    const fetchImages = async () => {
-      setIsLoading(true);
+  const fetchImages = useCallback(async (): Promise<void> => {
+    try {
+      setLoading(true);
       setError(null);
+      const response = await axios.get<{ results: Image[] }>(
+        "https://api.unsplash.com/search/photos",
+        // `https://api.unsplash.com/search/photos?page=${page}&per_page=${perPage}&query=${query}&client_id=${accessKey}`
 
-      try {
-        const response = await axios.get(
-          `https://api.unsplash.com/search/photos?page=${page}&per_page=${perPage}&query=${query}&client_id=${accessKey}`
-        );
+        //       if (page === 1) {
+        //         setImages(response.data.results);
+        //       } else {
+        //         setImages((prevImages) => [...prevImages, ...response.data.results]);
+        //       }
+        //     } catch (err) {
+        //       setError("Failed to fetch images. Please try again.");
+        //     } finally {
+        //       setIsLoading(false);
+        //     }
+        //   };
 
-        if (page === 1) {
-          setImages(response.data.results);
-        } else {
-          setImages((prevImages) => [...prevImages, ...response.data.results]);
+        //   fetchImages();
+        // }, [query, page]);
+        {
+          params: {
+            query,
+            page,
+            per_page: 12,
+          },
+          headers: {
+            Authorization: `Client-ID ${ACCESS_KEY}`,
+          },
         }
-      } catch (err) {
-        setError("Failed to fetch images. Please try again.");
-      } finally {
-        setIsLoading(false);
+      );
+      setImages((prevImages) => [...prevImages, ...response.data.results]);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
       }
-    };
-
-    fetchImages();
+    } finally {
+      setLoading(false);
+    }
   }, [query, page]);
 
-  const handleSearchSubmit = (newQuery) => {
-    if (newQuery === query) return;
+  useEffect(() => {
+    if (query) {
+      fetchImages();
+    }
+  }, [query, page, fetchImages]);
 
-    setQuery(newQuery);
-    setPage(1);
-    setImages([]);
+  // const handleSearchSubmit = (newQuery) => {
+  //   if (newQuery === query) return;
+
+  //   setQuery(newQuery);
+  //   setPage(1);
+  //   setImages([]);
+  // };
+  const handleSearch = (newQuery: string) => {
+    if (newQuery.trim() === "") {
+      toast.error("Please enter a search term.");
+      return;
+    }
+
+    if (newQuery !== query) {
+      setQuery(newQuery);
+      setPage(1);
+      setImages([]);
+      setError(null);
+      setSelectedImage(null);
+    }
   };
 
-  const handleImageClick = (image) => {
-    setSelectedImage(image);
+  // const handleImageClick = (image) => {
+  //   setSelectedImage(image);
+  // };
+
+  // const handleCloseModal = () => {
+  //   setSelectedImage(null);
+  // };
+
+  // const handleLoadMore = () => {
+  //   setPage((prevPage) => prevPage + 1);
+  // };
+  const loadMoreImages = () => {
+    setPage((prevPage) => prevPage + 1);
   };
 
-  const handleCloseModal = () => {
+  const closeModal = () => {
     setSelectedImage(null);
   };
 
-  const handleLoadMore = () => {
-    setPage((prevPage) => prevPage + 1);
+  const openModal = (image: Image) => {
+    setSelectedImage(image);
   };
+
   return (
-    <div>
-      <SearchBar onSubmit={handleSearchSubmit} />
-      <Toaster position="top-right" reverseOrder={false} />
+    <div className={style.app}>
+      <SearchBar onSubmit={handleSearch} />
+      <Toaster />
       {error && <ErrorMessage message={error} />}
-      {images.length > 0 && (
-        <ImageGallery images={images} onImageClick={handleImageClick} />
+      {!error && images.length > 0 && (
+        <ImageGallery images={images} onImageClick={openModal} />
       )}
       {isLoading && <Loader />}
-      {images.length > 0 && !isLoading && (
-        <LoadMoreBtn onClick={handleLoadMore} />
+      {!error && images.length > 0 && !isLoading && (
+        <LoadMoreBtn onClick={loadMoreImages} />
       )}
-      {selectedImage && (
+      <ImageModal
+        isOpen={Boolean(selectedImage)}
+        onRequestClose={closeModal}
+        image={selectedImage}
+      />
+      {/* {selectedImage && (
         <ImageModal image={selectedImage} onClose={handleCloseModal} />
-      )}
+      )} */}
     </div>
   );
-}
+};
 
 export default App;
