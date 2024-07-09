@@ -1,12 +1,17 @@
-import PropTypes from "prop-types";
-import styles from "./ErrorMessage.module.css";
+// import PropTypes from "prop-types";
+import React from "react";
+import style from "./ErrorMessage.module.css";
 
-const ErrorMessage = ({ message }) => {
-  return <p className={styles.Error}>{message}</p>;
-};
+interface ErrorMessageProps {
+  message: string;
+}
 
-ErrorMessage.propTypes = {
-  message: PropTypes.string.isRequired,
-};
+const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => (
+  <div className={style.errorMessage}>{message}</div>
+);
+
+// ErrorMessage.propTypes = {
+//   message: PropTypes.string.isRequired,
+// };
 
 export default ErrorMessage;

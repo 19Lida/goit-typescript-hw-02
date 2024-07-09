@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 // import PropTypes from "prop-types";
 import toast, { Toaster } from "react-hot-toast";
 // import styles from "./SearchBar.module.css";
-import styles from "../SearchBar/SearchBar.module.css";
+import style from "../SearchBar/SearchBar.module.css";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -29,9 +29,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
   };
 
   return (
-    <header className={styles.SearchBar}>
+    <header className={style.searchBar}>
       <form onSubmit={handleSubmit}>
-        <div className={styles.inputWrapper}>
+        <div className={style.inputWrapper}>
           <input
             // className={styles.input}
             type="text"

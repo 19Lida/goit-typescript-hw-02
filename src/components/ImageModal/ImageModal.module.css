@@ -1,29 +1,58 @@
-.Modal {
+.modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: white;
+  width: 100%;
+  max-width: 800px;
+  max-height: 90%;
+  background-color: white;
+  padding: 20px;
+  outline: none;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   max-width: 90%;
   max-height: 90%;
-  overflow: auto;
+  overflow: auto; */
 }
 
-.Overlay {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* z-index: 999; */
+}
+.closeButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #201f1f;
 }
 
-.ModalContent {
+.image {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: cover;
+  border-radius: 10px;
+}
+/* .ModalContent {
   text-align: center;
 }
 
@@ -32,19 +61,18 @@
   max-height: 60vh;
   object-fit: contain;
   border-radius: 8px;
-}
+} */
 
-.Info {
+.info {
   margin-top: 20px;
   text-align: left;
 }
-
-.Info p {
-  margin: 5px 0;
-  font-size: 16px;
+.descr {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
   color: black;
 }
-
-.Info strong {
-  color: #333;
+.text {
+  font-size: 1rem;
+  color: black;
 }
