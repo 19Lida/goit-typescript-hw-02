@@ -1,6 +1,7 @@
 // import PropTypes from "prop-types";
+import React from "react";
 import { Image } from "../App/App.types";
-import styles from "./ImageCard.module.css";
+import style from "./ImageCard.module.css";
 
 interface ImageCardProps {
   image: Image;
@@ -8,11 +9,11 @@ interface ImageCardProps {
 }
 
 const ImageCard: React.FC<ImageCardProps> = ({ image, onImageClick }) => (
-  <div className={styles.ImageCard}>
+  <div className={style.ImageCard}>
     <img
       src={image.urls.small}
       alt={image.alt_description}
-      className={styles.Image}
+      className={style.Image}
       onClick={() => onImageClick(image)}
     />
   </div>

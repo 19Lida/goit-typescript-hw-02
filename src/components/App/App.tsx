@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import React from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 // import SearchBar from "./components/SearchBar/SearchBar";
@@ -14,6 +15,8 @@ import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 // import ImageModal from "./components/ImageModal/ImageModal";
 import ImageModal from "../ImageModal/ImageModal";
 import { Image } from "./App.types";
+import style from "./App.module.css";
+
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import "./App.css";
@@ -41,20 +44,6 @@ const App = () => {
         "https://api.unsplash.com/search/photos",
         // `https://api.unsplash.com/search/photos?page=${page}&per_page=${perPage}&query=${query}&client_id=${accessKey}`
 
-        //       if (page === 1) {
-        //         setImages(response.data.results);
-        //       } else {
-        //         setImages((prevImages) => [...prevImages, ...response.data.results]);
-        //       }
-        //     } catch (err) {
-        //       setError("Failed to fetch images. Please try again.");
-        //     } finally {
-        //       setIsLoading(false);
-        //     }
-        //   };
-
-        //   fetchImages();
-        // }, [query, page]);
         {
           params: {
             query,
@@ -106,17 +95,6 @@ const App = () => {
     }
   };
 
-  // const handleImageClick = (image) => {
-  //   setSelectedImage(image);
-  // };
-
-  // const handleCloseModal = () => {
-  //   setSelectedImage(null);
-  // };
-
-  // const handleLoadMore = () => {
-  //   setPage((prevPage) => prevPage + 1);
-  // };
   const loadMoreImages = () => {
     setPage((prevPage) => prevPage + 1);
   };

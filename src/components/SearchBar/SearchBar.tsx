@@ -1,3 +1,4 @@
+import React from "react";
 import { ChangeEvent, FormEvent, useState } from "react";
 // import PropTypes from "prop-types";
 import toast, { Toaster } from "react-hot-toast";
@@ -33,7 +34,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
       <form onSubmit={handleSubmit}>
         <div className={style.inputWrapper}>
           <input
-            // className={styles.input}
             type="text"
             id="searchInput"
             value={input}
@@ -42,18 +42,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
             autoFocus
             placeholder="Search images and photos"
           />
+
           <button type="submit">
             <FontAwesomeIcon icon={faSearch} />
-            Search
           </button>
         </div>
       </form>
     </header>
   );
 };
-
-// SearchBar.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };
 
 export default SearchBar;
