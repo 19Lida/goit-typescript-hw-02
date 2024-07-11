@@ -1,7 +1,4 @@
 .ImageCard {
-  /* border: 1px solid #ccc;
-  border-radius: 4px;
-  overflow: hidden; */
   cursor: pointer;
   transition: transform 0.3s ease;
 }
@@ -19,8 +16,4 @@
   object-fit: cover;
   border-radius: 8px;
   border: 4px solid green;
-  /* display: block;
-  width: 100%;
-  height: auto;
-  cursor: pointer; */
 }

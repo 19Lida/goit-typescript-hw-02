@@ -1,8 +1,8 @@
 import React from "react";
 import { ChangeEvent, FormEvent, useState } from "react";
-// import PropTypes from "prop-types";
+
 import toast from "react-hot-toast";
-// import styles from "./SearchBar.module.css";
+
 import style from "../SearchBar/SearchBar.module.css";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

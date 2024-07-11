@@ -2,24 +2,21 @@ import { useState, useEffect, useCallback } from "react";
 import React from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-// import SearchBar from "./components/SearchBar/SearchBar";
+
 import SearchBar from "../SearchBar/SearchBar";
-// import ImageGallery from "./components/ImageGallery/ImageGallery";
+
 import ImageGallery from "../ImageGallery/ImageGallery";
-// import Loader from "./components/Loader/Loader";
+
 import Loader from "../Loader/Loader";
-// import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
-// import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
+
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
-// import ImageModal from "./components/ImageModal/ImageModal";
+
 import ImageModal from "../ImageModal/ImageModal";
 import { Image } from "./App.types";
 import style from "./App.module.css";
 
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import "./App.css";
 const ACCESS_KEY = "FzG5qD0HVMRBUhSh_8lpjbDu2i6ByAX9c3NYbWpe3rU";
 
 const App = () => {
@@ -30,19 +27,12 @@ const App = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
 
-  // const perPage = 12;
-  // const accessKey = "FzG5qD0HVMRBUhSh_8lpjbDu2i6ByAX9c3NYbWpe3rU";
-
-  // useEffect(() => {
-  //   if (!query) return;
-
   const fetchImages = useCallback(async (): Promise<void> => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get<{ results: Image[] }>(
+      const response: { data: { results: Image[] } } = await axios.get(
         "https://api.unsplash.com/search/photos",
-        // `https://api.unsplash.com/search/photos?page=${page}&per_page=${perPage}&query=${query}&client_id=${accessKey}`
 
         {
           params: {
@@ -73,13 +63,6 @@ const App = () => {
     }
   }, [query, page, fetchImages]);
 
-  // const handleSearchSubmit = (newQuery) => {
-  //   if (newQuery === query) return;
-
-  //   setQuery(newQuery);
-  //   setPage(1);
-  //   setImages([]);
-  // };
   const handleSearch = (newQuery: string) => {
     if (newQuery.trim() === "") {
       toast.error("Please enter a search term.");
@@ -124,9 +107,6 @@ const App = () => {
         onRequestClose={closeModal}
         image={selectedImage}
       />
-      {/* {selectedImage && (
-        <ImageModal image={selectedImage} onClose={handleCloseModal} />
-      )} */}
     </div>
   );
 };

@@ -13,14 +13,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  max-width: 90%;
-  max-height: 90%;
-  overflow: auto; */
 }
 
 .overlay {
@@ -52,16 +44,6 @@
   object-fit: cover;
   border-radius: 10px;
 }
-/* .ModalContent {
-  text-align: center;
-}
-
-.ModalContent img {
-  width: 100%;
-  max-height: 60vh;
-  object-fit: contain;
-  border-radius: 8px;
-} */
 
 .info {
   margin-top: 20px;
